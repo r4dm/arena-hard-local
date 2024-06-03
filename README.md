@@ -109,7 +109,7 @@ In `config/judge_config.yaml`, add your model name in `model_list`.
 ...
 # Add your model below for evaluation
 model_list:
-  - gpt-3.5-turbo-0125
+  - aya-23-8B
   - [YOUR-MODEL-NAME]
 ```
 and judge model name.
