@@ -133,15 +133,15 @@ def build_pairwise_browser_tab():
             with gr.Column():
                 if i == 0:
                     model_selectors[i] = gr.Dropdown(
-                        choices=["gpt-4-0314"],
-                        value="gpt-4-0314",
+                        choices=models,
+                        value="Phi-3-medium-128k-instruct",
                         label=f"Model {side_names[i]}",
                         container=False,
                     )
                 else:
                     model_selectors[i] = gr.Dropdown(
                         choices=models,
-                        value="gpt-3.5-turbo-0125",
+                        value="alpindale_gemma-2b-it",
                         label=f"Model {side_names[i]}",
                         container=False,
                     )
@@ -284,7 +284,7 @@ def load_single_model_judgments(dir: str):
     for filename in filenames:
         for line in open(filename):
             obj = json.loads(line)
-            judge = tuple(["gpt-4","single-math-v1"])
+            judge = tuple(["Llama-3-70B","single-math-v1"])
             qid, model = obj["question_id"], obj["model"]
 
             if judge not in judge_dict:

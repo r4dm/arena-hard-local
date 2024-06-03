@@ -43,9 +43,9 @@ def compute_mle_elo(df, SCALE=400, BASE=10, INIT_RATING=1000):
 
     elo_scores = SCALE * lr.coef_[0] + INIT_RATING
 
-    # set anchor as gpt-4-0314 = 1000
-    if "gpt-4-0314" in models.index:
-        elo_scores += 1000 - elo_scores[models["gpt-4-0314"]]
+    # set anchor as baseline_model = 1000
+    if args.baseline in models.index: ## change from "gpt-4-0314"
+        elo_scores += 1000 - elo_scores[models[args.baseline]] ## change from models["gpt-4-0314"]
     return pd.Series(elo_scores, index = models.index).sort_values(ascending=False)
 
 
@@ -122,10 +122,13 @@ def get_battles_from_judgment(judge_name, first_game_only=False, WEIGHT=3):
         for _, row in df.iterrows():
             # game 1
             output = {"question_id": row["question_id"],
-                    "model_a": "gpt-4-0314",
+                    "model_a": args.baseline, #change from "gpt-4-0314"
                     "model_b": row["model"]}
 
             game = row["games"][0]
+            
+            if game['score'] is not None:
+                game['score'] = game['score'].replace('[', '').replace(']', '') ##added
 
             weight = 1
             if game["score"] == "A=B":
@@ -149,10 +152,13 @@ def get_battles_from_judgment(judge_name, first_game_only=False, WEIGHT=3):
             if not first_game_only:
                 # game 2
                 output = {"question_id": row["question_id"],
-                        "model_a": "gpt-4-0314",
+                        "model_a": args.baseline, #change from "gpt-4-0314"
                         "model_b": row["model"]}
 
                 game = row["games"][1]
+                
+                if game['score'] is not None:
+                    game['score'] = game['score'].replace('[', '').replace(']', '') ##added
 
                 weight = 1
                 if game["score"] == "A=B":
@@ -246,7 +252,7 @@ if __name__ == "__main__":
     stats.sort_values(by="score", ascending=False, inplace=True)
     for _, row in stats.iterrows():
         interval = str((round(row['lower'] - row['score'], decimal), round(row['upper'] - row['score'], decimal)))
-        print(f"{row['model'] : <30} | score: {round(row['score'], decimal) : ^5} | 95% CI: {interval : ^12} | average #tokens: {int(row['avg_tokens'])}")
+        print(f"{row['model'] : <50} | score: {round(row['score'], decimal) : ^5} | 95% CI: {interval : ^15} | average #tokens: {int(row['avg_tokens'])}")
 
     if args.output:
         cur_date = datetime.datetime.now()

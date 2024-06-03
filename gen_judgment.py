@@ -18,7 +18,6 @@ from utils import (
     make_config,
 )
 
-
 def get_score(judgment, pattern, pairwise=True):
     matches = pattern.findall(judgment)
     matches = [m for m in matches if m != ""]
@@ -26,7 +25,7 @@ def get_score(judgment, pattern, pairwise=True):
         return None, True
     elif len(set(matches)) == 1:
         if pairwise:
-            return matches[0].strip("\n"), False
+            return matches[0].strip("\n").upper(), False  #add Upper
         return int(matches[0])
     else:
         return None, False
@@ -35,14 +34,17 @@ def get_score(judgment, pattern, pairwise=True):
 # get answer from model
 def get_answer(model, conv, temperature, max_tokens, endpoint_dict=None):
     api_dict = get_endpoint(endpoint_dict["endpoints"])
-
+    
     if endpoint_dict["api_type"] == "anthropic":
         output = chat_completion_anthropic(model, conv, temperature, max_tokens)
     elif endpoint_dict["api_type"] == "azure":
         output = chat_completion_openai_azure(model, conv, temperature, max_tokens, api_dict)
-    else:
+    elif endpoint_dict["api_type"] == "openai":
         output = chat_completion_openai(model, conv, temperature, max_tokens, api_dict)
+    else:
+        raise ValueError(f"Unsupported api_type: {endpoint_dict['api_type']}")
     return output
+
 
 
 def judgment(**args):
@@ -93,11 +95,11 @@ def judgment(**args):
             
             user_prompt = template.format(**prompt_args)
             conv.append({"role": "user", "content": user_prompt})
-
+            
         judgment = ""
-        for _ in range(2):
+        for _ in range(3):
             new_judgment = get_answer(
-                model,
+                endpoint_info["model_name"], # changed from "model" in original code
                 conv,
                 configs["temperature"],
                 configs["max_tokens"],
@@ -118,11 +120,11 @@ def judgment(**args):
         result = {
             "user_prompt": conv[1]["content"],
             "judgment": judgment,
-            "score":score
+            "score": score
         }
         output["games"].append(result)
 
-    with open(output_file, "a") as f:
+    with open(output_file, "a", encoding="utf-8") as f: #add utf8
         f.write(json.dumps(output, ensure_ascii=False) + "\n")
 
 
@@ -171,7 +173,7 @@ if __name__ == "__main__":
     existing_judgments = load_model_answers(output_dir)
 
     endpoint_info = endpoint_list[configs["judge_model"]]
-
+    
     with concurrent.futures.ThreadPoolExecutor(max_workers=endpoint_info["parallel"]) as executor:
         futures = []
         for model in models:
@@ -213,3 +215,4 @@ if __name__ == "__main__":
             concurrent.futures.as_completed(futures), total=len(futures)
         ):
             future.result()
+

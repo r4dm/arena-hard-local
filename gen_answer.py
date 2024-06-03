@@ -98,8 +98,11 @@ def get_answer(
     }
 
     os.makedirs(os.path.dirname(answer_file), exist_ok=True)
-    with open(answer_file, "a") as fout:
-        fout.write(json.dumps(ans) + "\n")
+    #with open(answer_file, "a") as fout:
+    #    fout.write(json.dumps(ans) + "\n")
+    with open(answer_file, "a", encoding="utf-8") as fout:
+        json.dump(ans, fout, ensure_ascii=False)
+        fout.write("\n")
 
 
 if __name__ == "__main__":

@@ -112,6 +112,7 @@ def chat_completion_openai(model, messages, temperature, max_tokens, api_dict=No
                 messages=messages,
                 temperature=temperature,
                 max_tokens=max_tokens,
+                # extra_body={'repetition_penalty': 1.15}, #added
                 )
             output = completion.choices[0].message.content
             break
