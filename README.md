@@ -39,7 +39,7 @@ alpindale_gemma-2b-it                              | score:  7.9  | 95% CI:   (-
 
 ## Install Dependencies
 ```
-git clone https://github.com/radaevm/arena-hard-local.git
+git clone https://github.com/r4dm/arena-hard-local.git
 cd arena-hard-local
 pip install -r requirements.txt
 pip install -r requirements-optional.txt  # Optional dependencies (e.g., anthropic sdk)
