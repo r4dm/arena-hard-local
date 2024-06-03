@@ -10,7 +10,7 @@ To evaluate models, it is proposed to use Meta-Llama-3-70B-Instruct or Llama-3-7
 We use original arena-hard questions translated into Russian: [Vikhrmodels/arena_hard_ru](https://huggingface.co/datasets/Vikhrmodels/arena_hard_ru).
 To use another language, replace the file **data/arena-hard-v0.1/question.jsonl** and make sure that the resulting json is saved with the required encoding (line 103 in **gen_answer.py**).
 
-This code also uses a different baseline model Phi-3-medium-128k-instruct instead of gpt-4-0314.
+This code also uses a different default baseline model - Phi-3-medium-128k-instruct instead of gpt-4-0314.
 
 ### Llama-3-70B-Instruct-GPTQ as judge:
 ```console
@@ -123,12 +123,12 @@ Judgment caching is also implemented. It will skip generating judgments that has
 ### Step 6. Show result
 Output model win rates.  Optionally, use `--full-stats` for detailed results.
 ```console
-> python3 show_result.py --judge-name Llama-3-70B-Instruct-AH-AWQ --baseline Phi-3-medium-128k-instruct
+python3 show_result.py --judge-name Llama-3-70B-Instruct-AH-AWQ --baseline Phi-3-medium-128k-instruct
 ```
 ### Step 7. Arena Hard UI
 You can review individual judgment results using our UI code.
 ```console
-> python3 qa_broswer.py --share
+python3 qa_broswer.py --share
 ```
 
 
