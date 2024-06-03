@@ -5,7 +5,7 @@ The repository uses a simplified evaluation prompt in which the model does not h
 Check out lmsys blog post for more details about how Arena Hard Auto v0.1 works -> [Blog post link](https://lmsys.org/blog/2024-04-19-arena-hard/).
 
 ## Local Model
-To evaluate models, it is proposed to use Meta-Llama-3-70B-Instruct or fine-tuned for these purposes [Llama-3-70B-Instruct-AH-AWQ](https://huggingface.co/radm/Llama-3-70B-Instruct-AH-AWQ), trained to judge the stronger model gpt-4-1106-preview.
+To evaluate models, it is proposed to use Meta-Llama-3-70B-Instruct or fine-tuned for these purposes [Llama-3-70B-Instruct-AH-AWQ](https://huggingface.co/radm/Llama-3-70B-Instruct-AH-AWQ), trained to judge the stronger model gpt-4-1106-preview. You can also configure the repository to work with any other judge model.
 
 We use original hard arena questions translated into Russian [Vikhrmodels/arena_hard_ru](https://huggingface.co/datasets/Vikhrmodels/arena_hard_ru).
 To use another language, replace the file **data/arena-hard-v0.1/question.jsonl** and make sure that the resulting json is saved with the required encoding (line 103 in **gen_answer.py**).
@@ -44,7 +44,7 @@ cd arena-hard-local
 pip install -r requirements.txt
 pip install -r requirements-optional.txt  # Optional dependencies (e.g., anthropic sdk)
 ```
-Then install vLLM using the repository [instructions](https://github.com/vllm-project/vllm)
+Then install vLLM using the repository [instructions](https://github.com/vllm-project/vllm).
 
 
 ## Run bench
@@ -73,7 +73,7 @@ You may use inference engine such as [vLLM](https://docs.vllm.ai/en/latest/servi
 
 
 ### Step 2. Run vLLM for Answers
-Change to your path and model name
+Change to your path and model name:
 ```console
 python3 -m vllm.entrypoints.openai.api_server --model /home/jupyter/models/aya-23-8B --api-key token-abc123 --port 8010
 ```
@@ -97,7 +97,7 @@ python3 gen_answer.py
 Caching feature is implemented. The code will skip generating an answer when there is already an existing answer/judgment to the same prompt. 
 
 ### Step 4. Run vLLM for Judgments
-Change to your path and model name
+Change to your path and model name:
 ```console
 python3 -m vllm.entrypoints.openai.api_server --model /home/jupyter/models/Llama-3-70B-Instruct-AH-AWQ --api-key token-abc123 --port 8010
 ```
