@@ -10,6 +10,8 @@ To evaluate models, it is proposed to use Meta-Llama-3-70B-Instruct or fine-tune
 We use original hard arena questions translated into Russian [Vikhrmodels/arena_hard_ru](https://huggingface.co/datasets/Vikhrmodels/arena_hard_ru).
 To use another language, replace the file **data/arena-hard-v0.1/question.jsonl** and make sure that the resulting json is saved with the required encoding (line 103 in **gen_answer.py**).
 
+This code also uses a different baseline model Phi-3-medium-128k-instruct instead of gpt-4-0314.
+
 ### Llama-3-70B-Instruct as judge:
 ```console
 Llama-3-Instruct-8B-SimPO                          | score: 78.3  | 95% CI:   (-1.5, 1.2)   | average #tokens: 545
