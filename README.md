@@ -44,7 +44,7 @@ cd arena-hard-local
 pip install -r requirements.txt
 pip install -r requirements-optional.txt  # Optional dependencies (e.g., anthropic sdk)
 ```
-Then install vLLM using the repository [instructions](https://github.com/vllm-project/vllm).
+Then install vLLM using the [instructions](https://docs.vllm.ai/en/latest/getting_started/installation.html) for your platform.
 
 
 ## Run bench
