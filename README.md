@@ -12,7 +12,7 @@ To use another language, replace the file **data/arena-hard-v0.1/question.jsonl*
 
 This code also uses a different baseline model Phi-3-medium-128k-instruct instead of gpt-4-0314.
 
-### Llama-3-70B-Instruct as judge:
+### Llama-3-70B-Instruct-GPTQ as judge:
 ```console
 Llama-3-Instruct-8B-SimPO                          | score: 78.3  | 95% CI:   (-1.5, 1.2)   | average #tokens: 545
 SELM-Llama-3-8B-Instruct-iter-3                    | score: 72.8  | 95% CI:   (-2.1, 1.4)   | average #tokens: 606
