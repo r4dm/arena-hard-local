@@ -2,7 +2,7 @@
 Arena-Hard-Local is an adaptation of [lm-sys/arena-hard-auto](https://github.com/lm-sys/arena-hard-auto) to use the local model as a judge and also for multilingual use (Russian by default).
 The repository uses a simplified evaluation prompt in which the model does not have to also answer the question that the evaluated models answered. This was done intentionally, since first of all the project is intended for quick evaluation of checkpoints after fine-tuning. In addition, we noticed that the performance of the local 70b model is sometimes not enough for a full prompt. For full evaluation, please use the original repository.
 
-Check out our blog post for more details about how Arena Hard Auto v0.1 works -> [Blog post link](https://lmsys.org/blog/2024-04-19-arena-hard/).
+Check out lmsys blog post for more details about how Arena Hard Auto v0.1 works -> [Blog post link](https://lmsys.org/blog/2024-04-19-arena-hard/).
 
 ## Local Model
 To evaluate models, it is proposed to use Meta-Llama-3-70B-Instruct or fine-tuned for these purposes [Llama-3-70B-Instruct-AH-AWQ](https://huggingface.co/radm/Llama-3-70B-Instruct-AH-AWQ), trained to judge the stronger model gpt-4-1106-preview.
@@ -42,6 +42,7 @@ cd arena-hard-local
 pip install -r requirements.txt
 pip install -r requirements-optional.txt  # Optional dependencies (e.g., anthropic sdk)
 ```
+Then install vLLM using the repository [instructions](https://github.com/vllm-project/vllm)
 
 
 ## Run bench
@@ -69,7 +70,13 @@ aya-23-8B:
 You may use inference engine such as [vLLM](https://docs.vllm.ai/en/latest/serving/openai_compatible_server.html) or [SGLang](https://github.com/sgl-project/sglang?tab=readme-ov-file#using-local-models) to host your model with an OpenAI compatible API server.
 
 
-### Step 2. Generate Model Answers
+### Step 2. Run vLLM for Answers
+Change to your path and model name
+```console
+python3 -m vllm.entrypoints.openai.api_server --model /home/jupyter/models/aya-23-8B --api-key token-abc123 --port 8010
+```
+
+### Step 3. Generate Model Answers
 
 In `config/gen_answer_config.yaml`, add your model name in `model_list`.
 ```yaml
@@ -87,7 +94,13 @@ python3 gen_answer.py
 ```
 Caching feature is implemented. The code will skip generating an answer when there is already an existing answer/judgment to the same prompt. 
 
-### Step 3. Generate Judgments
+### Step 4. Run vLLM for Judgments
+Change to your path and model name
+```console
+python3 -m vllm.entrypoints.openai.api_server --model /home/jupyter/models/Llama-3-70B-Instruct-AH-AWQ --api-key token-abc123 --port 8010
+```
+
+### Step 5. Generate Judgments
 
 In `config/judge_config.yaml`, add your model name in `model_list`.
 ```yaml
@@ -97,6 +110,7 @@ model_list:
   - gpt-3.5-turbo-0125
   - [YOUR-MODEL-NAME]
 ```
+and judge model name.
 
 Run the command to generate judgments:
 ```console
@@ -104,12 +118,12 @@ python3 gen_judgment.py
 ```
 Judgment caching is also implemented. It will skip generating judgments that has already been generated or lacks one of the model answers.  
 
-### Step 4. Show result
+### Step 6. Show result
 Output model win rates.  Optionally, use `--full-stats` for detailed results.
 ```console
 > python3 show_result.py --judge-name Llama-3-70B-Instruct-AH-AWQ --baseline Phi-3-medium-128k-instruct
 ```
-### Step 5. Arena Hard UI
+### Step 7. Arena Hard UI
 You can review individual judgment results using our UI code.
 ```console
 > python3 qa_broswer.py --share
