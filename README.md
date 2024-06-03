@@ -1,106 +1,69 @@
-# Arena-Hard-Auto
-Arena-Hard-Auto-v0.1 is an automatic evaluation tool for instruction-tuned LLMs. It contains 500 challenging user queries. We prompt GPT-4-Turbo as judge to compare the models' responses against a baseline model (default: GPT-4-0314). Although both Arena-Hard-Auto and Chatbot Arena Category Hard employ similar pipeline to select hard prompts, Arena-Hard-Auto employs automatic judge as a cheaper and faster approximator to human preference. Notably, Arena-Hard-Auto has the highest correlation and separability to Chatbot Arena among popular open-ended LLM benchmarks (see our blog post). If you are curious to see how well your model might perform on Chatbot Arena, we recommend trying Arena-Hard-Auto. 
+# Arena-Hard-Local
+Arena-Hard-Local is an adaptation of [lm-sys/arena-hard-auto](https://github.com/lm-sys/arena-hard-auto) to use the local model as a judge and also for multilingual use (Russian by default).
+The repository uses a simplified evaluation prompt in which the model does not have to also answer the question that the evaluated models answered. This was done intentionally, since first of all the project is intended for quick evaluation of checkpoints after fine-tuning. In addition, we noticed that the performance of the local 70b model is sometimes not enough for a full prompt. For full evaluation, please use the original repository.
 
 Check out our blog post for more details about how Arena Hard Auto v0.1 works -> [Blog post link](https://lmsys.org/blog/2024-04-19-arena-hard/).
 
-## Full Leaderboard (Updated: 05/21)
+## Local Model
+To evaluate models, it is proposed to use Meta-Llama-3-70B-Instruct or fine-tuned for these purposes [Llama-3-70B-Instruct-AH-AWQ](https://huggingface.co/radm/Llama-3-70B-Instruct-AH-AWQ), trained to judge the stronger model gpt-4-1106-preview.
+
+We use original hard arena questions translated into Russian [Vikhrmodels/arena_hard_ru](https://huggingface.co/datasets/Vikhrmodels/arena_hard_ru).
+To use another language, replace the file **data/arena-hard-v0.1/question.jsonl** and make sure that the resulting json is saved with the required encoding (line 103 in **gen_answer.py**).
+
+### Llama-3-70B-Instruct as judge:
 ```console
-gpt-4-turbo-2024-04-09         | score: 82.6  | 95% CI: (-1.7, 1.9)  | average #tokens: 662
-gpt-4-0125-preview             | score: 78.0  | 95% CI: (-2.1, 2.4)  | average #tokens: 619
-gemini-1.5-pro-api-preview     | score: 72.0  | 95% CI: (-2.1, 2.5)  | average #tokens: 676
-yi-large-preview               | score: 71.5  | 95% CI: (-2.4, 2.0)  | average #tokens: 720
-claude-3-opus-20240229         | score: 60.4  | 95% CI: (-2.5, 2.5)  | average #tokens: 541
-glm-4                          | score: 55.7  | 95% CI: (-2.4, 2.3)  | average #tokens: 622
-gpt-4-0314                     | score: 50.0  | 95% CI:  (0.0, 0.0)  | average #tokens: 423
-gemini-1.5-flash-api-preview   | score: 49.6  | 95% CI: (-2.2, 2.8)  | average #tokens: 642
-claude-3-sonnet-20240229       | score: 46.8  | 95% CI: (-2.3, 2.7)  | average #tokens: 552
-claude-3-haiku-20240307        | score: 41.5  | 95% CI: (-2.5, 2.5)  | average #tokens: 505
-llama-3-70b-chat-hf            | score: 41.1  | 95% CI: (-2.0, 2.2)  | average #tokens: 583
-gpt-4-0613                     | score: 37.9  | 95% CI: (-2.8, 2.4)  | average #tokens: 354
-mistral-large-2402             | score: 37.7  | 95% CI: (-2.1, 2.6)  | average #tokens: 400
-mixtral-8x22b-instruct-v0.1    | score: 36.4  | 95% CI: (-2.4, 2.6)  | average #tokens: 430
-Qwen1.5-72B-Chat               | score: 36.1  | 95% CI: (-2.0, 2.7)  | average #tokens: 474
-command-r-plus                 | score: 33.1  | 95% CI: (-2.8, 2.4)  | average #tokens: 541
-mistral-medium                 | score: 31.9  | 95% CI: (-1.9, 2.2)  | average #tokens: 485
-mistral-next                   | score: 27.4  | 95% CI: (-2.4, 2.4)  | average #tokens: 297
-gpt-3.5-turbo-0613             | score: 24.8  | 95% CI: (-1.9, 2.3)  | average #tokens: 401
-claude-2.0                     | score: 24.0  | 95% CI: (-1.8, 1.8)  | average #tokens: 295
-dbrx-instruct                  | score: 23.9  | 95% CI: (-1.5, 1.5)  | average #tokens: 415
-Mixtral-8x7B-Instruct-v0.1     | score: 23.4  | 95% CI: (-2.0, 1.9)  | average #tokens: 457
-gpt-3.5-turbo-0125             | score: 23.3  | 95% CI: (-2.2, 1.9)  | average #tokens: 329
-Yi-34B-Chat                    | score: 23.1  | 95% CI: (-1.6, 1.8)  | average #tokens: 611
-Starling-LM-7B-beta            | score: 23.0  | 95% CI: (-1.8, 1.8)  | average #tokens: 530
-claude-2.1                     | score: 22.8  | 95% CI: (-2.3, 1.8)  | average #tokens: 290
-Snorkel-Mistral-PairRM-DPO     | score: 20.7  | 95% CI: (-1.8, 2.2)  | average #tokens: 564                       
-llama-3-8b-chat-hf             | score: 20.6  | 95% CI: (-2.0, 1.9)  | average #tokens: 585                       
-gpt-3.5-turbo-1106             | score: 18.9  | 95% CI: (-1.8, 1.6)  | average #tokens: 285                       
-gpt-3.5-turbo-0301             | score: 18.1  | 95% CI: (-1.9, 2.1)  | average #tokens: 334                               
-gemini-1.0-pro                 | score: 17.8  | 95% CI: (-1.2, 2.2)  | average #tokens: 322                               
-snowflake-arctic-instruct      | score: 17.6  | 95% CI: (-1.8, 1.5)  | average #tokens: 365                                         
-command-r                      | score: 17.0  | 95% CI: (-1.7, 1.8)  | average #tokens: 432                                         
-phi-3-mini-128k-instruct       | score: 15.4  | 95% CI: (-1.4, 1.4)  | average #tokens: 609                                                    
-tulu-2-dpo-70b                 | score: 15.0  | 95% CI: (-1.6, 1.3)  | average #tokens: 550                                                    
-Starling-LM-7B-alpha           | score: 12.8  | 95% CI: (-1.6, 1.4)  | average #tokens: 483                                                    
-mistral-7b-instruct            | score: 12.6  | 95% CI: (-1.7, 1.4)  | average #tokens: 541                                                                 
-gemma-1.1-7b-it                | score: 12.1  | 95% CI: (-1.3, 1.3)  | average #tokens: 341                                                                 
-Llama-2-70b-chat-hf            | score: 11.6  | 95% CI: (-1.5, 1.2)  | average #tokens: 595                                                                 
-vicuna-33b-v1.3                | score:  8.6  | 95% CI: (-1.1, 1.1)  | average #tokens: 451                                                                 
-gemma-7b-it                    | score:  7.5  | 95% CI: (-1.2, 1.3)  | average #tokens: 378                                                                                
-Llama-2-7b-chat-hf             | score:  4.6  | 95% CI: (-0.8, 0.8)  | average #tokens: 561                                                                                
-gemma-1.1-2b-it                | score:  3.4  | 95% CI: (-0.6, 0.8)  | average #tokens: 316                                                                                
-gemma-2b-it                    | score:  3.0  | 95% CI: (-0.6, 0.6)  | average #tokens: 369
+Llama-3-Instruct-8B-SimPO                          | score: 78.3  | 95% CI:   (-1.5, 1.2)   | average #tokens: 545
+SELM-Llama-3-8B-Instruct-iter-3                    | score: 72.8  | 95% CI:   (-2.1, 1.4)   | average #tokens: 606
+Meta-Llama-3-8B-Instruct-f16                       | score: 65.3  | 95% CI:   (-1.8, 2.1)   | average #tokens: 560
+suzume-llama-3-8B-multilingual-orpo-borda-half     | score: 63.5  | 95% CI:   (-1.6, 2.1)   | average #tokens: 978
+Phi-3-medium-128k-instruct                         | score: 50.0  | 95% CI:   (0.0, 0.0)    | average #tokens: 801
+suzume-llama-3-8B-multilingual                     | score: 48.1  | 95% CI:   (-2.2, 1.8)   | average #tokens: 767
+aya-23-8B                                          | score: 48.0  | 95% CI:   (-2.0, 2.1)   | average #tokens: 834
+Vikhr-7B-instruct_0.5                              | score: 19.6  | 95% CI:   (-1.3, 1.5)   | average #tokens: 794
+alpindale_gemma-2b-it                              | score: 11.2  | 95% CI:   (-1.0, 0.8)   | average #tokens: 425
+```
+### Llama-3-70B-Instruct-AH-AWQ as judge:
+```console
+Llama-3-Instruct-8B-SimPO                          | score: 83.8  | 95% CI:   (-1.4, 1.3)   | average #tokens: 545
+SELM-Llama-3-8B-Instruct-iter-3                    | score: 78.8  | 95% CI:   (-1.7, 1.9)   | average #tokens: 606
+suzume-llama-3-8B-multilingual-orpo-borda-half     | score: 71.8  | 95% CI:   (-1.7, 2.4)   | average #tokens: 978
+Meta-Llama-3-8B-Instruct-f16                       | score: 69.8  | 95% CI:   (-1.9, 1.7)   | average #tokens: 560
+suzume-llama-3-8B-multilingual                     | score: 54.0  | 95% CI:   (-2.1, 2.1)   | average #tokens: 767
+aya-23-8B                                          | score: 50.4  | 95% CI:   (-1.7, 1.7)   | average #tokens: 834
+Phi-3-medium-128k-instruct                         | score: 50.0  | 95% CI:   (0.0, 0.0)    | average #tokens: 801
+Vikhr-7B-instruct_0.5                              | score: 14.2  | 95% CI:   (-1.3, 1.0)   | average #tokens: 794
+alpindale_gemma-2b-it                              | score:  7.9  | 95% CI:   (-0.9, 0.8)   | average #tokens: 425
 ```
 
 ## Install Dependencies
 ```
-git clone https://github.com/lm-sys/arena-hard.git
-cd arena-hard
+[git clone https://github.com/lm-sys/arena-hard.git](https://github.com/radaevm/arena-hard-local.git)
+cd arena-hard-local
 pip install -r requirements.txt
 pip install -r requirements-optional.txt  # Optional dependencies (e.g., anthropic sdk)
 ```
 
-## Download dataset
-We have pre-generated many popular models answers and judgments. You can browse them with an online [demo](https://huggingface.co/spaces/lmsys/arena-hard-browser) or download them (with [`git-lfs`](https://git-lfs.com) installed) by
+## Run bench
+Just run
 ```console
-> git clone https://huggingface.co/spaces/lmsys/arena-hard-browser
-// copy answers/judgments to the data directory
-> cp -r arena-hard-browser/data . 
-```
-Then run
-```console
-> python show_result.py
-gpt-4-0125-preview             | score: 78.0  | 95% CI: (-1.8, 2.2)  | average #tokens: 619
-claude-3-opus-20240229         | score: 60.4  | 95% CI: (-2.6, 2.1)  | average #tokens: 541
-gpt-4-0314                     | score: 50.0  | 95% CI:  (0.0, 0.0)  | average #tokens: 423
-claude-3-sonnet-20240229       | score: 46.8  | 95% CI: (-2.7, 2.3)  | average #tokens: 552
-claude-3-haiku-20240307        | score: 41.5  | 95% CI: (-2.4, 2.5)  | average #tokens: 505
-gpt-4-0613                     | score: 37.9  | 95% CI: (-2.1, 2.2)  | average #tokens: 354
-mistral-large-2402             | score: 37.7  | 95% CI: (-2.9, 2.8)  | average #tokens: 400
-Qwen1.5-72B-Chat               | score: 36.1  | 95% CI: (-2.1, 2.4)  | average #tokens: 474
-command-r-plus                 | score: 33.1  | 95% CI: (-2.0, 1.9)  | average #tokens: 541
+python3 show_result.py --judge-name Llama-3-70B-Instruct-AH-AWQ --baseline Phi-3-medium-128k-instruct
 ```
 Running `show_results.py` will save generated battles into `data/arena_hard_battles.jsonl` and bootstrapping statistics into `data/bootstrapping_results.jsonl`. If you don't want to regenerate battles or bootstrapping statistics, simply toggle argument `--load-battles` or `--load-bootstrap`, respectively.
 
-## Evaluate a new model on Arena-Hard-Auto v0.1:
+## Evaluate a new model on Arena-Hard-Local
 
 ### Step 1. Set up the endpoint config to your model
 
 Fill in your API endpoint in `config/api_config.yaml`. We support OpenAI compatible API server. You can specify `parallel` to indicate the number of concurrent API requests (default: 1).
 ```yaml
 # example
-gpt-3.5-turbo-0125:
-    model_name: gpt-3.5-turbo-0125
-    endpoints: null
-    api_type: openai
-    parallel: 8
-
-[YOUR-MODEL-NAME]:
-    model_name: [YOUR-MODEL-NAME]
-    endpoints:
-        - api_base: [YOUR-ENDPOINT-URL]
-          api_key: [YOUR-API-KEY]
-    api_type: openai
-    parallel: 8
+aya-23-8B:
+     model_name: /home/jupyter/models/aya-23-8B
+     endpoints:
+         - api_base: http://localhost:8010/v1
+           api_key: token-abc123
+     api_type: openai
+     parallel: 16
 ```
 You may use inference engine such as [vLLM](https://docs.vllm.ai/en/latest/serving/openai_compatible_server.html) or [SGLang](https://github.com/sgl-project/sglang?tab=readme-ov-file#using-local-models) to host your model with an OpenAI compatible API server.
 
@@ -119,7 +82,7 @@ model_list:
 ```
 Run the command to generate answers:
 ```console
-python gen_answer.py
+python3 gen_answer.py
 ```
 Caching feature is implemented. The code will skip generating an answer when there is already an existing answer/judgment to the same prompt. 
 
@@ -136,31 +99,19 @@ model_list:
 
 Run the command to generate judgments:
 ```console
-python gen_judgment.py
+python3 gen_judgment.py
 ```
 Judgment caching is also implemented. It will skip generating judgments that has already been generated or lacks one of the model answers.  
 
 ### Step 4. Show result
 Output model win rates.  Optionally, use `--full-stats` for detailed results.
 ```console
-> python show_result.py
+> python3 show_result.py --judge-name Llama-3-70B-Instruct-AH-AWQ --baseline Phi-3-medium-128k-instruct
 ```
 ### Step 5. Arena Hard UI
 You can review individual judgment results using our UI code.
 ```console
-> python qa_broswer.py --share
+> python3 qa_broswer.py --share
 ```
 
-## Community Contribution
-Coming soon...
 
-## Citation
-```
-@misc{arenahard2024,
-    title = {From Live Data to High-Quality Benchmarks: The Arena-Hard Pipeline},
-    url = {https://lmsys.org/blog/2024-04-19-arena-hard/},
-    author = {Tianle Li*, Wei-Lin Chiang*, Evan Frick, Lisa Dunlap, Banghua Zhu, Joseph E. Gonzalez, Ion Stoica},
-    month = {April},
-    year = {2024}
-}
-```
