@@ -5,36 +5,38 @@ The repository uses a simplified evaluation prompt in which the model does not h
 Check out lmsys blog post for more details about how Arena Hard Auto v0.1 works -> [Blog post link](https://lmsys.org/blog/2024-04-19-arena-hard/).
 
 ## Local Model
-To evaluate models, it is proposed to use Meta-Llama-3-70B-Instruct or Llama-3-70B-Instruct-AH-AWQ, modified for these purposes, trained on the judge’s responses of a stronger model - gpt-4-1106-preview. You can also configure the repository to work with any other judge model.
+To evaluate models, it is proposed to use Qwen2-72B-Instruct-AWQ or [Llama-3-70B-Instruct-AH-AWQ](https://huggingface.co/radm/Llama-3-70B-Instruct-AH-AWQ), modified for these purposes, trained on the judge’s responses of a stronger model - gpt-4-1106-preview. You can also configure the repository to work with any other judge model.
 
 We use original arena-hard questions translated into Russian: [Vikhrmodels/arena_hard_ru](https://huggingface.co/datasets/Vikhrmodels/arena_hard_ru).
 To use another language, replace the file **data/arena-hard-v0.1/question.jsonl** and make sure that the resulting json is saved with the required encoding (line 103 in **gen_answer.py**).
 
 This code also uses a different default baseline model - Phi-3-medium-128k-instruct instead of gpt-4-0314.
 
-### Llama-3-70B-Instruct-GPTQ as judge:
-```console
-Llama-3-Instruct-8B-SimPO                          | score: 78.3  | 95% CI:   (-1.5, 1.2)   | average #tokens: 545
-SELM-Llama-3-8B-Instruct-iter-3                    | score: 72.8  | 95% CI:   (-2.1, 1.4)   | average #tokens: 606
-Meta-Llama-3-8B-Instruct-f16                       | score: 65.3  | 95% CI:   (-1.8, 2.1)   | average #tokens: 560
-suzume-llama-3-8B-multilingual-orpo-borda-half     | score: 63.5  | 95% CI:   (-1.6, 2.1)   | average #tokens: 978
-Phi-3-medium-128k-instruct                         | score: 50.0  | 95% CI:   (0.0, 0.0)    | average #tokens: 801
-suzume-llama-3-8B-multilingual                     | score: 48.1  | 95% CI:   (-2.2, 1.8)   | average #tokens: 767
-aya-23-8B                                          | score: 48.0  | 95% CI:   (-2.0, 2.1)   | average #tokens: 834
-Vikhr-7B-instruct_0.5                              | score: 19.6  | 95% CI:   (-1.3, 1.5)   | average #tokens: 794
-alpindale_gemma-2b-it                              | score: 11.2  | 95% CI:   (-1.0, 0.8)   | average #tokens: 425
-```
 ### Llama-3-70B-Instruct-AH-AWQ as judge:
 ```console
-Llama-3-Instruct-8B-SimPO                          | score: 83.8  | 95% CI:   (-1.4, 1.3)   | average #tokens: 545
-SELM-Llama-3-8B-Instruct-iter-3                    | score: 78.8  | 95% CI:   (-1.7, 1.9)   | average #tokens: 606
-suzume-llama-3-8B-multilingual-orpo-borda-half     | score: 71.8  | 95% CI:   (-1.7, 2.4)   | average #tokens: 978
-Meta-Llama-3-8B-Instruct-f16                       | score: 69.8  | 95% CI:   (-1.9, 1.7)   | average #tokens: 560
-suzume-llama-3-8B-multilingual                     | score: 54.0  | 95% CI:   (-2.1, 2.1)   | average #tokens: 767
-aya-23-8B                                          | score: 50.4  | 95% CI:   (-1.7, 1.7)   | average #tokens: 834
+Llama-3-Instruct-8B-SimPO                          | score: 83.0  | 95% CI:   (-1.5, 1.4)   | average #tokens: 545
+SELM-Llama-3-8B-Instruct-iter-3                    | score: 77.9  | 95% CI:   (-1.5, 1.7)   | average #tokens: 606
+suzume-llama-3-8B-multilingual-orpo-borda-half     | score: 71.7  | 95% CI:   (-1.7, 1.6)   | average #tokens: 978
+Meta-Llama-3-8B-Instruct-f16                       | score: 69.3  | 95% CI:   (-1.9, 2.1)   | average #tokens: 560
+suzume-llama-3-8B-multilingual                     | score: 54.0  | 95% CI:   (-2.0, 1.7)   | average #tokens: 767
+aya-23-8B                                          | score: 51.4  | 95% CI:   (-2.1, 1.8)   | average #tokens: 834
 Phi-3-medium-128k-instruct                         | score: 50.0  | 95% CI:   (0.0, 0.0)    | average #tokens: 801
-Vikhr-7B-instruct_0.5                              | score: 14.2  | 95% CI:   (-1.3, 1.0)   | average #tokens: 794
-alpindale_gemma-2b-it                              | score:  7.9  | 95% CI:   (-0.9, 0.8)   | average #tokens: 425
+Qwen2-7B-Instruct                                  | score: 35.0  | 95% CI:   (-1.5, 2.2)   | average #tokens: 554
+Vikhr-7B-instruct_0.5                              | score: 15.9  | 95% CI:   (-1.1, 1.0)   | average #tokens: 794
+alpindale_gemma-2b-it                              | score:  8.8  | 95% CI:   (-0.9, 0.9)   | average #tokens: 425
+```
+### Qwen2-72B-Instruct-AWQ as judge:
+```console
+Llama-3-Instruct-8B-SimPO                          | score: 66.3  | 95% CI:   (-2.0, 1.7)   | average #tokens: 545
+suzume-llama-3-8B-multilingual-orpo-borda-half     | score: 65.1  | 95% CI:   (-1.6, 1.7)   | average #tokens: 978
+SELM-Llama-3-8B-Instruct-iter-3                    | score: 62.6  | 95% CI:   (-1.9, 1.7)   | average #tokens: 606
+Meta-Llama-3-8B-Instruct-f16                       | score: 57.5  | 95% CI:   (-1.8, 1.7)   | average #tokens: 560
+suzume-llama-3-8B-multilingual                     | score: 54.7  | 95% CI:   (-1.5, 1.7)   | average #tokens: 767
+Phi-3-medium-128k-instruct                         | score: 50.0  | 95% CI:   (0.0, 0.0)    | average #tokens: 801
+aya-23-8B                                          | score: 48.1  | 95% CI:   (-2.0, 1.7)   | average #tokens: 834
+Qwen2-7B-Instruct                                  | score: 40.8  | 95% CI:   (-1.7, 1.8)   | average #tokens: 554
+Vikhr-7B-instruct_0.5                              | score: 22.3  | 95% CI:   (-1.3, 1.5)   | average #tokens: 794
+alpindale_gemma-2b-it                              | score: 10.3  | 95% CI:   (-1.1, 0.9)   | average #tokens: 425
 ```
 
 ## Install Dependencies
