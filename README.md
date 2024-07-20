@@ -1,3 +1,25 @@
+### Full Leaderboard (Updated: 07/20)
+```console
+Athene-70B-AWQ                                     | score: 95.9  | 95% CI:   (-0.7, 0.6)   | average #tokens: 997
+gemma-2-9b-it-SimPO                                | score: 90.9  | 95% CI:   (-1.2, 1.1)   | average #tokens: 1065
+Llama-3-Instruct-8B-SimPO                          | score: 83.0  | 95% CI:   (-1.2, 1.5)   | average #tokens: 545
+SELM-Llama-3-8B-Instruct-iter-3                    | score: 77.9  | 95% CI:   (-1.6, 1.4)   | average #tokens: 606
+Meta-Llama-3-70B-Instruct-GPTQ                     | score: 74.9  | 95% CI:   (-1.5, 1.5)   | average #tokens: 568
+saiga_llama3_70b_abl_kto_m1_d2_awq                 | score: 74.8  | 95% CI:   (-2.1, 1.8)   | average #tokens: 673
+Llama-3-70B-Instruct-AH-AWQ                        | score: 74.3  | 95% CI:   (-1.8, 1.7)   | average #tokens: 791
+saiga_llama3_70b_abliterated-AWQ                   | score: 74.2  | 95% CI:   (-1.6, 2.0)   | average #tokens: 672
+suzume-llama-3-8B-multilingual-orpo-borda-half     | score: 71.7  | 95% CI:   (-1.8, 1.9)   | average #tokens: 978
+Meta-Llama-3-8B-Instruct-f16                       | score: 69.3  | 95% CI:   (-1.9, 1.8)   | average #tokens: 560
+gemma-2-9b-it                                      | score: 67.0  | 95% CI:   (-2.0, 1.8)   | average #tokens: 760
+saiga_llama3_8b__kto_m5_d3                         | score: 58.1  | 95% CI:   (-1.6, 2.0)   | average #tokens: 867
+suzume-llama-3-8B-multilingual                     | score: 54.0  | 95% CI:   (-1.8, 1.8)   | average #tokens: 767
+aya-23-8B                                          | score: 51.4  | 95% CI:   (-1.9, 2.2)   | average #tokens: 834
+Phi-3-medium-128k-instruct                         | score: 50.0  | 95% CI:   (0.0, 0.0)    | average #tokens: 801
+Qwen2-7B-Instruct                                  | score: 35.0  | 95% CI:   (-2.0, 2.1)   | average #tokens: 554
+Vikhr-7B-instruct_0.5                              | score: 15.9  | 95% CI:   (-1.6, 1.3)   | average #tokens: 794
+alpindale_gemma-2b-it                              | score:  8.8  | 95% CI:   (-1.0, 1.2)   | average #tokens: 425
+```
+
 # Arena-Hard-Local
 Arena-Hard-Local is an adaptation of [lm-sys/arena-hard-auto](https://github.com/lm-sys/arena-hard-auto) to use the local model as a judge and also for multilingual use (Russian by default).
 The repository uses a simplified evaluation prompt in which the model does not have to also answer the question that the evaluated models answered. This was done intentionally, since first of all the project is intended for quick evaluation of checkpoints after fine-tuning. In addition, we noticed that the performance of the local 70b model is sometimes not enough for a full prompt. For full evaluation, please use the original repository.
