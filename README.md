@@ -1,4 +1,4 @@
-### Full Leaderboard (Updated: 07/22)
+### Full Leaderboard* (Updated: 07/22)
 ```console
 Athene-70B-AWQ                                     | score: 95.9  | 95% CI:   (-0.7, 0.6)   | average #tokens: 997
 gemma-2-9b-it-SimPO                                | score: 90.9  | 95% CI:   (-1.2, 1.1)   | average #tokens: 1065
@@ -20,6 +20,7 @@ Qwen2-7B-Instruct                                  | score: 35.0  | 95% CI:   (-
 Vikhr-7B-instruct_0.5                              | score: 15.9  | 95% CI:   (-1.6, 1.3)   | average #tokens: 794
 alpindale_gemma-2b-it                              | score:  8.8  | 95% CI:   (-1.0, 1.2)   | average #tokens: 425
 ```
+*with original arena-hard questions translated into Russian
 
 # Arena-Hard-Local
 Arena-Hard-Local is an adaptation of [lm-sys/arena-hard-auto](https://github.com/lm-sys/arena-hard-auto) to use the local model as a judge and also for multilingual use (Russian by default).
