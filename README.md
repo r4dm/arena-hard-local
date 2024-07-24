@@ -23,7 +23,7 @@ Qwen2-7B-Instruct                                  | score: 35.0  | 95% CI:   (-
 Vikhr-7B-instruct_0.5                              | score: 15.9  | 95% CI:   (-1.6, 1.3)   | average #tokens: 794
 alpindale_gemma-2b-it                              | score:  8.8  | 95% CI:   (-1.0, 1.2)   | average #tokens: 425
 ```
-*with original arena-hard questions translated into Russian
+*with original arena-hard questions translated into Russian. Llama-3-70B-Instruct-AH-AWQ as judge
 
 # Arena-Hard-Local
 Arena-Hard-Local is an adaptation of [lm-sys/arena-hard-auto](https://github.com/lm-sys/arena-hard-auto) to use the local model as a judge and also for multilingual use (Russian by default).
