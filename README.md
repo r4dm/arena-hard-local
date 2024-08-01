@@ -19,6 +19,7 @@ suzume-llama-3-8B-multilingual                     | score: 54.0  | 95% CI:   (-
 aya-23-8B                                          | score: 51.4  | 95% CI:   (-1.9, 2.2)   | average #tokens: 834
 Phi-3-medium-128k-instruct                         | score: 50.0  | 95% CI:   (0.0, 0.0)    | average #tokens: 801
 Mistral-Nemo-Instruct-2407                         | score: 49.5  | 95% CI:   (-1.7, 1.9)   | average #tokens: 660
+gemma-2-2b-it-abl                                  | score: 48.8  | 95% CI:   (-2.0, 1.5)   | average #tokens: 783
 Llama-3.1-8B-Instruct                              | score: 43.8  | 95% CI:   (-1.9, 1.8)   | average #tokens: 847
 Qwen2-7B-Instruct                                  | score: 35.0  | 95% CI:   (-2.0, 2.1)   | average #tokens: 554
 Vikhr-7B-instruct_0.5                              | score: 15.9  | 95% CI:   (-1.6, 1.3)   | average #tokens: 794
