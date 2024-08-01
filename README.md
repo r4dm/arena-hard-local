@@ -1,7 +1,8 @@
-### Full Leaderboard* (Updated: 07/24)
+### Full Leaderboard* (Updated: 08/01)
 ```console
 Athene-70B-AWQ                                     | score: 95.9  | 95% CI:   (-0.7, 0.6)   | average #tokens: 997
 gemma-2-9b-it-SimPO                                | score: 90.9  | 95% CI:   (-1.2, 1.1)   | average #tokens: 1065
+gemma-2-27b-it-FP8                                 | score: 82.0  | 95% CI:   (-1.6, 1.5)   | average #tokens: 799
 Llama-3-Instruct-8B-SimPO                          | score: 83.0  | 95% CI:   (-1.2, 1.5)   | average #tokens: 545
 T-lite-instruct-0.1                                | score: 79.4  | 95% CI:   (-1.6, 1.2)   | average #tokens: 1056
 SELM-Llama-3-8B-Instruct-iter-3                    | score: 77.9  | 95% CI:   (-1.6, 1.4)   | average #tokens: 606
