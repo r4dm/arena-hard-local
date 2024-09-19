@@ -1,4 +1,4 @@
-### Full Leaderboard* (Updated: 09/18)
+### Full Leaderboard* (Updated: 09/19)
 ```console
 Athene-70B-AWQ                                     | score: 95.9  | 95% CI:   (-0.7, 0.6)   | average #tokens: 997
 gemma-2-9b-it-SimPO                                | score: 90.9  | 95% CI:   (-1.2, 1.1)   | average #tokens: 1065
