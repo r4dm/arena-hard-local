@@ -1,4 +1,4 @@
-### Full Leaderboard* (Updated: 09/19)
+### Full Leaderboard* (Updated: 09/23)
 ```console
 Athene-70B-AWQ                                     | score: 95.9  | 95% CI:   (-0.7, 0.6)   | average #tokens: 997
 gemma-2-9b-it-SimPO                                | score: 90.9  | 95% CI:   (-1.2, 1.1)   | average #tokens: 1065
@@ -10,6 +10,7 @@ T-lite-instruct-0.1                                | score: 79.4  | 95% CI:   (-
 Mistral-Small-Instruct-2409-awq                    | score: 78.2  | 95% CI:   (-1.5, 1.3)   | average #tokens: 826
 SELM-Llama-3-8B-Instruct-iter-3                    | score: 77.9  | 95% CI:   (-1.6, 1.4)   | average #tokens: 606
 Qwen2.5-32B-Instruct-AWQ                           | score: 76.6  | 95% CI:   (-2.3, 1.6)   | average #tokens: 740
+Vikhr-Nemo-12B-Instruct-R-21-09-24                 | score: 76.6  | 95% CI:   (-1.5, 1.5)   | average #tokens: 925
 Meta-Llama-3-70B-Instruct-GPTQ                     | score: 74.9  | 95% CI:   (-1.5, 1.5)   | average #tokens: 568
 saiga_llama3_70b_abl_kto_m1_d2_awq                 | score: 74.8  | 95% CI:   (-2.1, 1.8)   | average #tokens: 673
 Llama-3-70B-Instruct-AH-AWQ                        | score: 74.3  | 95% CI:   (-1.8, 1.7)   | average #tokens: 791
